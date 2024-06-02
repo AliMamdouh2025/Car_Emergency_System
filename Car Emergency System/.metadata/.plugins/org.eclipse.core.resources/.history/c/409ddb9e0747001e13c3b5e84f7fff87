@@ -1,0 +1,20 @@
+/*
+ * Potentiometer.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef POTENTIOMETER_H_
+#define POTENTIOMETER_H_
+
+#define POTENTIOMETER_CHANNEL 0
+
+typedef enum
+{
+	NO_CLOCK,F_CPU_CLOCK,F_CPU_8,F_CPU_64,F_CPU_256,F_CPU_1024
+}Volt_Percent;
+
+uint8 Voltage_Percent(void);
+
+#endif /* POTENTIOMETER_H_ */

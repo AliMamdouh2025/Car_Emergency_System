@@ -1,0 +1,20 @@
+/*
+ * Potentiometer.c
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#include "Potentiometer.h"
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include "common_macros.h"
+#include "std_types.h" ///delay
+#include "adc.h" ///delay
+
+
+uint8 Voltage_Percent(void)
+{
+
+}

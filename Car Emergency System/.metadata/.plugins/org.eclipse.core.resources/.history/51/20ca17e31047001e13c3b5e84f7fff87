@@ -1,0 +1,18 @@
+/*
+ * Servo.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef SERVO_H_
+#define SERVO_H_
+
+#define SERVO_PORT PORTD
+#define SERVO_PIN PD5
+
+
+void Timer1_Fast_PWM(unsigned short duty_cycle);
+
+
+#endif /* SERVO_H_ */

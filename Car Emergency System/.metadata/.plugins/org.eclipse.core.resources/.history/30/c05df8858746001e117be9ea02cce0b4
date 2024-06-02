@@ -1,0 +1,146 @@
+/*
+ * Internal_EEPROM_prg.c
+ *
+ *  Created on: Aug 29, 2023
+ *      Author: lap
+ */
+#include "uart.h"
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include <avr/eeprom.h>
+#include "common_macros.h"
+#include "std_types.h" ///delay
+#include "Internal_EEPROM_cfg.h"
+#include "Internal_EEPROM_interface.h"
+#include "Internal_EEPROM_private.h"
+
+/////////////////////////////////////////////////////////////////////////////UpdateMode+ must enable optimizer
+
+#if(EEPROM_INTERRUPT_STATE == EEPROM_INTERRUPT_ENABLE)
+
+/* Global variables to hold the address of the call back function in the application *//////////////#if interrupt
+static volatile void (*g_callBackPtrReceive)(void) = NULL_PTR;
+
+void EEEPROM_READY_setCallBack(void(*a_ptr)(void))
+{
+	/* Save the address of the Call back function in a global variable */
+	g_callBackPtrReceive = a_ptr;
+}
+
+ISR(EE_RDY_vect)
+{
+	if(g_callBackPtrReceive != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtrReceive)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+#endif
+
+void Internal_EEPROM_init(void)
+{
+#if(EEPROM_INTERRUPT_STATE == EEPROM_INTERRUPT_ENABLE)
+	SET_BIT(EECR,EERIE);
+#elif(EEPROM_INTERRUPT_STATE == EEPROM_INTERRUPT_DISABLE)
+	CLEAR_BIT(EECR,EERIE);
+#endif
+
+}
+
+void EEPROM_write(uint16 u16Address, uint8 ucData)
+{
+	/* Disable Global Interrupts to protect EEPROM*/
+	CLEAR_BIT(SREG,7);
+
+
+
+	/* Wait for completion of previous write */
+	while(EECR & (1<<EEWE)); ///////////
+
+	/* Wait for SPMEN to be cleared(important When using bootloader) */
+#if(BOOTLOADER_STATE == BOOTLOADER_USED)
+	while(SPMCR & (1<<SPMEN));
+#endif
+
+#if(EEPROM_UPPDATE_OPTIMIZER == ENABLE)
+	/* Set up address register */
+	EEARH = u16Address>>8;
+	EEARL = u16Address;
+
+	/* Start eeprom read by writing EERE */
+	SET_BIT(EECR,EERE);
+
+	/*check if value is repeated or not */
+	if(EEDR == ucData)
+	{
+		return;
+	}
+	else
+	{
+		/*Continue writing normally*/
+	}
+
+	_delay_ms(100);
+
+#endif
+
+
+
+	/* Set up address and data registers */
+	EEARH = u16Address>>8;
+	EEARL = u16Address;
+	EEDR = ucData;
+
+	/* Write logical one to EEMWE */
+	SET_BIT(EECR,EEMWE);
+
+	/* Start eeprom write by setting EEWE */
+	SET_BIT(EECR,EEWE);
+
+	//SET_BIT(PORTC,1);
+
+
+	/* Enable Global Interrupts */
+	SET_BIT(SREG,7);
+
+}
+
+
+
+
+unsigned char EEPROM_read(uint16 u16Address)
+{
+	/* Disable Global Interrupts to protect EEPROM*/
+	CLEAR_BIT(SREG,7);
+	/* Wait for completion of previous write */
+	while(EECR & (1<<EEWE)); ///////////
+
+
+	/* Wait for completion of previous write */
+	//while(EECR & (1<<EEMWE)); ///Why EEWE stuck in infinite loop!!!
+
+	//SET_BIT(DDRA,0);/////////////////for debug
+	//SET_BIT(PORTA,0);/////////////////for debug
+
+
+	/* Wait for SPMEN to be cleared(important When using bootloader) */
+#if(BOOTLOADER_STATE == BOOTLOADER_USED)
+	while(SPMCR & (1<<SPMEN));
+#endif
+
+	/* Set up address register */
+	EEARH = u16Address>>8;
+	EEARL = u16Address;
+
+	/* Start eeprom read by writing EERE */
+	SET_BIT(EECR,EERE);
+
+
+	/* Enable Global Interrupts */
+	SET_BIT(SREG,7);
+
+	/* Return data from data register */
+	return EEDR;
+}
+

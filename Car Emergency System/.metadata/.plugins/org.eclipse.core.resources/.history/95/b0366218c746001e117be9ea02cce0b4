@@ -1,0 +1,19 @@
+/*
+ * button.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef BUTTON_H_
+#define BUTTON_H_
+
+#define BUTTON_PORT DDRB
+#define BUTTON_PIN PB2
+#define BUTTON_INTERRUPT_ID INT2
+#define BUTTON_ISR_ID INT2
+
+
+void Button_Init(void);
+
+#endif /* BUTTON_H_ */

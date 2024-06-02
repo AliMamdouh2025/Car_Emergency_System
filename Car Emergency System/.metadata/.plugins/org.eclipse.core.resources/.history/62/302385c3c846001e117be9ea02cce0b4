@@ -1,0 +1,45 @@
+/*
+ * button.c
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include <avr/eeprom.h>
+#include "common_macros.h"
+#include "std_types.h" ///delay
+#include "button.h"
+
+/* Global variables to hold the address of the call back function in the application *//////////////#if interrupt
+static volatile void (*g_callBackPtrReceive)(void) = NULL_PTR;
+
+void Button_setCallBack(void(*a_ptr)(void))
+{
+	/* Save the address of the Call back function in a global variable */
+	g_callBackPtrReceive = a_ptr;
+}
+
+ISR(BUTTON_ISR)
+{
+	if(g_callBackPtrReceive != NULL_PTR)
+	{
+		/* Call the Call Back function in the application after the edge is detected */
+		(*g_callBackPtrReceive)(); /* another method to call the function using pointer to function g_callBackPtr(); */
+	}
+}
+
+
+
+
+
+void Button_Init(void)
+{
+	CLEAR_BIT(BUTTON_PORT,BUTTON_PIN); // Configure INT2/PB2 as input pin
+	SET_BIT(MCUCSR,BUTTON_EDGE_TYPE); // Trigger INT2 with the raising edge
+	SET_BIT(GICR,BUTTON_INTERRUPT_ID); // Enable external interrupt pin INT2
+}
+

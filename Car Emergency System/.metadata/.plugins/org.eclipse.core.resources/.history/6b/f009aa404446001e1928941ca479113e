@@ -1,0 +1,27 @@
+ /******************************************************************************
+ *
+ * Module: UART
+ *
+ * File Name: uart.h
+ *
+ * Description: Header file for the UART AVR driver
+ *
+ * Author: Ali Mamdouh
+ *
+ *******************************************************************************/
+
+#ifndef INTERNAL_EEPROM_INTERFACE_H_
+#define INTERNAL_EEPROM_INTERFACE_H_
+
+
+/////////////////////////////////////////////////////////////////////////////UpdateMode
+
+
+void Internal_EEPROM_init(void);
+void EEPROM_write(uint16 u16Address, uint8 ucData);
+unsigned char EEPROM_read(uint16 u16Address);
+
+
+
+
+#endif /* INTERNAL_EEPROM_INTERFACE_H_ */

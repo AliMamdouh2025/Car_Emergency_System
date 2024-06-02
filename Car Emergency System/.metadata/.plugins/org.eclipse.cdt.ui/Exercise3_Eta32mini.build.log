@@ -1,0 +1,38 @@
+04:59:11 **** Build of configuration Debug for project Exercise3_Eta32mini ****
+make all 
+Building file: ../Exercise3_Eta32mini.c
+Invoking: AVR Compiler
+avr-gcc -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega32 -DF_CPU=16000000UL -MMD -MP -MF"Exercise3_Eta32mini.d" -MT"Exercise3_Eta32mini.o" -c -o "Exercise3_Eta32mini.o" "../Exercise3_Eta32mini.c"
+Finished building: ../Exercise3_Eta32mini.c
+ 
+Building target: Exercise3_Eta32mini.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Exercise3_Eta32mini.map -mmcu=atmega32 -o "Exercise3_Eta32mini.elf"  ./Exercise3_Eta32mini.o   
+Finished building target: Exercise3_Eta32mini.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Exercise3_Eta32mini.elf  >"Exercise3_Eta32mini.lss"
+Finished building: Exercise3_Eta32mini.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Exercise3_Eta32mini.elf  "Exercise3_Eta32mini.hex"
+Finished building: Exercise3_Eta32mini.hex
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega32 Exercise3_Eta32mini.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:     336 bytes (1.0% Full)
+(.text + .data + .bootloader)
+
+Data:          1 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+04:59:12 Build Finished. 0 errors, 0 warnings. (took 1s.649ms)
+

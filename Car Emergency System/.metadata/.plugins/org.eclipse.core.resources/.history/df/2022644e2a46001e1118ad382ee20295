@@ -1,0 +1,15 @@
+/*
+ * Internal_EEPROM_cfg.h
+ *
+ *  Created on: Aug 29, 2023
+ *      Author: lap
+ */
+
+#ifndef INTERNAL_EEPROM_CFG_H_
+#define INTERNAL_EEPROM_CFG_H_
+
+#define BOOTLOADER_STATE BOOTLOADER_USED
+#define EEPROM_INTERRUPT_STATE EEPROM_INTERRUPT_DISABLE
+
+
+#endif /* INTERNAL_EEPROM_CFG_H_ */

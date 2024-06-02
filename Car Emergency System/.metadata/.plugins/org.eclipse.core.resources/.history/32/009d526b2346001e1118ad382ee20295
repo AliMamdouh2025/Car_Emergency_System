@@ -1,0 +1,21 @@
+ /******************************************************************************
+ *
+ * Module: UART
+ *
+ * File Name: uart.h
+ *
+ * Description: Header file for the UART AVR driver
+ *
+ * Author: Ali Mamdouh
+ *
+ *******************************************************************************/
+
+#ifndef INERNAL_EEPROM_H_
+#define INERNAL_EEPROM_H_
+#include "std_types.h"
+#define INTERRUPT_RECEIVER_ENABLE 1//sending and receiving using interrupt when 1 and polling when 0
+
+
+
+
+#endif /* INERNAL_EEPROM_H_ */

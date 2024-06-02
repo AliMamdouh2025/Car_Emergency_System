@@ -1,0 +1,92 @@
+/*
+ * Internal_EEPROM_prg.c
+ *
+ *  Created on: Aug 29, 2023
+ *      Author: lap
+ */
+#include "uart.h"
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include <avr/eeprom.h>
+#include "common_macros.h"
+#include "std_types.h" ///delay
+#include "Internal_EEPROM_cfg.h"
+#include "Internal_EEPROM_interface.h"
+#include "Internal_EEPROM_private.h"
+
+
+void Internal_EEPROM_init(void)
+{
+#if(EEPROM_INTERRUPT_STATE == EEPROM_INTERRUPT_ENABLE)
+	SET_BIT(EECR,EERIE);
+#elif(EEPROM_INTERRUPT_STATE == EEPROM_INTERRUPT_DISABLE)
+	CLEAR_BIT(EECR,EERIE);
+#endif
+
+}
+
+void EEPROM_write(uint16 u16Address, uint8 ucData)
+{
+	/* Disable Global Interrupts to protect EEPROM*/
+	CLEAR_BIT(SREG,7);
+
+	/* Wait for completion of previous write */
+	while(EECR & (1<<EEWE));
+
+	/* Wait for SPMEN to be cleared(important When using bootloader) */
+#if(BOOTLOADER_STATE == BOOTLOADER_USED)
+	while(SPMCR & (1<<SPMEN));
+#endif
+
+
+	/* Set up address and data registers */
+	EEARH = u16Address>>8;
+	EEARL = u16Address;
+	EEDR = ucData;
+
+	/* Write logical one to EEMWE */
+	SET_BIT(EECR,EEMWE);
+
+	/* Start eeprom write by setting EEWE */
+	SET_BIT(EECR,EEWE);
+
+	/* Enable Global Interrupts */
+	SET_BIT(SREG,7);
+
+}
+
+
+
+
+unsigned char EEPROM_read(uint16 u16Address)
+{
+	/* Disable Global Interrupts to protect EEPROM*/
+	CLEAR_BIT(SREG,7);
+
+	/* Wait for completion of previous write */
+	//while(EECR & (1<<EEWE)); ///stuck in infinite loop!!!
+
+	//SET_BIT(DDRA,0);/////////////////for debug
+	//SET_BIT(PORTA,0);/////////////////for debug
+
+
+	/* Wait for SPMEN to be cleared(important When using bootloader) */
+#if(BOOTLOADER_STATE == BOOTLOADER_USED)
+	while(SPMCR & (1<<SPMEN));
+#endif
+
+	/* Set up address register */
+	EEARH = u16Address>>8;
+	EEARL = u16Address;
+
+	/* Start eeprom read by writing EERE */
+	SET_BIT(EECR,EERE);
+
+	/* Enable Global Interrupts */
+	SET_BIT(SREG,7);
+
+	/* Return data from data register */
+	return EEDR;
+}
+

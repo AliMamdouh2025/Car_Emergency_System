@@ -1,0 +1,19 @@
+/*
+ * Servo.c
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include "common_macros.h"
+#include "std_types.h" ///delay
+
+
+void Servo_init(void)
+{
+	DDRD |= (1<<PD5);SET_BIT(DDRD,PD5)
+}
+

@@ -1,0 +1,24 @@
+/*
+ * Servo.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef SERVO_H_
+#define SERVO_H_
+
+#define SERVO_PORT PORTD
+#define SERVO_PIN PD5
+
+typedef enum
+{
+	Volt_10_Percent, Volt_20_Percent,Volt_30_Percent,Volt_40_Percent,Volt_50_Percent,Volt_60_Percent,
+	Volt_70_Percent,Volt_80_Percent,Volt_90_Percent,Volt_100_Percent
+}Volt_Percent_t;
+
+
+void Timer1_Fast_PWM(unsigned short duty_cycle);
+
+
+#endif /* SERVO_H_ */

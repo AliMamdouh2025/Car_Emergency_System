@@ -1,0 +1,20 @@
+03:37:58 **** Incremental Build of configuration Debug for project Challenge_Measure_Signal_Freq ****
+make all 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega32 Challenge_Measure_Signal_Freq.elf
+AVR Memory Usage
+----------------
+Device: atmega32
+
+Program:    8326 bytes (25.4% Full)
+(.text + .data + .bootloader)
+
+Data:         29 bytes (1.4% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+03:37:59 Build Finished. 0 errors, 0 warnings. (took 431ms)
+

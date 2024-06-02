@@ -1,0 +1,27 @@
+/*
+ * button.c
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include <avr/eeprom.h>
+#include "common_macros.h"
+#include "std_types.h" ///delay
+#include "button.h"
+
+
+
+void Button_Init(void)
+{
+	CLEAR_BIT(BUTTON_PORT,BUTTON_PIN); // Configure INT2/PB2 as input pin
+	SET_BIT(MCUCSR,BUTTON_EDGE_TYPE); // Trigger INT2 with the raising edge
+	MCUCSR |= (1<<ISC2);
+	GICR   |= (1<<INT2);	 // Enable external interrupt pin INT2
+	SREG   |= (1<<7);        // Enable interrupts by setting I-bit
+}
+

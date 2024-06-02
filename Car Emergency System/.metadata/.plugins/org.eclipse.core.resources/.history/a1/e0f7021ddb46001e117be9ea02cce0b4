@@ -1,0 +1,13 @@
+/*
+ * Potentiometer.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef POTENTIOMETER_H_
+#define POTENTIOMETER_H_
+
+#define POTENTIOMETER_CHANNEL 2
+
+#endif /* POTENTIOMETER_H_ */

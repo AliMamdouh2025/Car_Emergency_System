@@ -1,0 +1,3 @@
+Simulate emergency system used in car.
+
+Technology used: GPIO, ADC, PWM, External interrupts, LM35 Sensor, LCD, Servo Motor, DC Motor,  Timer, UART, EEPROM, Buzzer, ATmega32.

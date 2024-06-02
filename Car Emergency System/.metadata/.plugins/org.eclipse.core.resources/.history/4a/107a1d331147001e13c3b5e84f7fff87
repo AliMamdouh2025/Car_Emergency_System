@@ -1,0 +1,23 @@
+/*
+ * Servo.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef SERVO_H_
+#define SERVO_H_
+
+#define SERVO_PORT PORTD
+#define SERVO_PIN PD5
+
+typedef enum
+{
+	Position_0 = 124, Position_90 = 187, Position_180
+}Volt_Percent_t;
+
+
+void Timer1_Fast_PWM(unsigned short duty_cycle);
+
+
+#endif /* SERVO_H_ */

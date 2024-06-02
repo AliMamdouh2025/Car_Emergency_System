@@ -1,0 +1,23 @@
+/*
+ * Servo.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef SERVO_H_
+#define SERVO_H_
+
+#define SERVO_PORT PORTD
+#define SERVO_PIN PD5
+
+typedef enum
+{
+	Position_0 = 124, Position_90 = 187, Position_180 = 250
+}Servo_Position_t;
+
+
+void Servo_Timer1_PWM(uint16 duty_cycle);
+void Servo_init(void);
+void Servo_SetPostion(Servo_Position_t Position);
+#endif /* SERVO_H_ */

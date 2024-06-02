@@ -1,0 +1,21 @@
+/*
+ * Potentiometer.h
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#ifndef POTENTIOMETER_H_
+#define POTENTIOMETER_H_
+
+#define POTENTIOMETER_CHANNEL 0
+
+typedef enum
+{
+	Volt_10_Percent, Volt_20_Percent,Volt_30_Percent,Volt_40_Percent,Volt_50_Percent,Volt_60_Percent,
+	Volt_70_Percent,Volt_80_Percent,Volt_90_Percent,Volt_100_Percent
+}Volt_Percent;
+
+uint8 Voltage_Percent(void);
+
+#endif /* POTENTIOMETER_H_ */

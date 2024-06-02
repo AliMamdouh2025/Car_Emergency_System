@@ -1,0 +1,102 @@
+
+/*
+ * 4
+ *
+ * take orginal file from zip file in MT Course
+ *
+ * */
+#include "uart.h"
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include "common_macros.h" ///delay
+#include "Internal_EEPROM_interface.h"
+#include "std_types.h"
+#include <avr/eeprom.h>
+#include "adc.h"
+#include "lm35_sensor.h"
+
+#define MESSAGELENGHTH 8
+
+
+uint8 g_MessageArray[MESSAGELENGHTH];
+uint8 g_UartReceiveData;//store each letter for the message
+uint8 g_UartReceiveFlag = 0, g_UartMessageCounter = 0;
+boolean g_UartMessageFlag = FALSE;//gives information about message state(if it has wrong length or format it gives False, else it gives true)
+
+void UartReceiveMessage(void)/////////////////// if condition using switch case chat gpt use struct message
+{
+	/*SET_BIT(PORTA,0);//////////////debug
+	g_UartReceiveData = UART_recieveByte();
+
+	if(g_UartReceiveData == '1')
+	{
+		SET_BIT(PORTB,0);
+	}
+	else if(g_UartReceiveData == '0')
+	{
+		CLEAR_BIT(PORTB,0);
+	}*/
+
+}
+
+
+
+int main(void)
+{
+	SREG |= (1<<7);/* Enable Global Interrupts */
+	uint16 temp;
+
+	/* Initialize the UART driver with Baud-rate = 9600 bits/sec */
+	UART_init(9600);
+	UartReceive_setCallBack(UartReceiveMessage);
+
+	/* initialize ADC driver */
+	ADC_ConfigType adcConfig = {ADC_REF_VOLT_CODE, F_CPU_8}; //initialize structure of adc to choose required prescaler and reference
+
+	SET_BIT(DDRC,0);/////////////////debug
+	SET_BIT(DDRC,1);/////////////////debug
+	SET_BIT(DDRC,7);/////////////////debug
+
+	//	Internal_EEPROM_init();
+	//EEPROM_write((uint16*)0, 5);
+
+	eeprom_update_byte ((uint8*)65, 7);
+	uint8 x = eeprom_read_byte ((uint8*)65);
+
+
+
+
+	while(1)
+	{
+		/*UART_sendByte('1');
+		_delay_ms(1000);
+		UART_sendByte('0');
+		_delay_ms(1000);*/
+
+		temp = LM35_getTemperature();
+
+		/* Display the temperature value every time at same position */
+		if(temp <= 50)
+		{
+			SET_BIT(PORTC,0);
+			CLEAR_BIT(PORTC,1);
+			CLEAR_BIT(PORTC,7);
+
+		}
+		else if(temp <= 100)
+		{
+			SET_BIT(PORTC,1);
+			CLEAR_BIT(PORTC,0);
+			CLEAR_BIT(PORTC,7);
+		}
+		else
+		{
+			SET_BIT(PORTC,7);
+			CLEAR_BIT(PORTC,1);
+			CLEAR_BIT(PORTC,0);
+		}
+
+
+	}
+}

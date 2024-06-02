@@ -1,0 +1,13 @@
+/*
+ * Internal_EEPROM_private.h
+ *
+ *  Created on: Aug 29, 2023
+ *      Author: lap
+ */
+
+#ifndef INTERNAL_EEPROM_PRIVATE_H_
+#define INTERNAL_EEPROM_PRIVATE_H_
+
+
+
+#endif /* INTERNAL_EEPROM_PRIVATE_H_ */

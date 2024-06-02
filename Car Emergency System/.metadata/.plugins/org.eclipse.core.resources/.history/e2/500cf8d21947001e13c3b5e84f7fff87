@@ -1,0 +1,154 @@
+
+/*
+ * 4
+ *
+ * take orginal file from zip file in MT Course
+ *
+ * */
+#include "uart.h"
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include "common_macros.h" ///delay
+#include "std_types.h"
+#include "adc.h"
+#include "motor.h"
+#include "Potentiometer.h"
+#include "Servo.h"
+
+#define STOP_MACHINE 155
+
+#define MESSAGELENGHTH 8
+
+
+uint8 g_MessageArray[MESSAGELENGHTH];
+uint8 g_UartReceiveData;//store each letter for the message
+uint8 g_UartReceiveFlag = 0, g_UartMessageCounter = 0;
+boolean g_UartMessageFlag = FALSE;//gives information about message state(if it has wrong length or format it gives False, else it gives true)
+
+void UartReceiveMessage(void)/////////////////// if condition using switch case chat gpt use struct message
+{
+	//SET_BIT(PORTA,0);//////////////debug
+	g_UartReceiveData = UART_recieveByte();
+
+	/*if(g_UartReceiveData == '1')
+	{
+		SET_BIT(PORTB,0);
+	}
+	else if(g_UartReceiveData == '0')
+	{
+		CLEAR_BIT(PORTB,0);
+	}*/
+
+/*	if(g_UartReceiveData <= 40)
+	{
+		SET_BIT(PORTB,0);
+		CLEAR_BIT(PORTB,1);
+		CLEAR_BIT(PORTB,7);
+	}
+	else if(g_UartReceiveData <= 100)
+	{
+		SET_BIT(PORTB,1);
+		CLEAR_BIT(PORTB,0);
+		CLEAR_BIT(PORTB,7);
+	}
+	else
+	{
+		SET_BIT(PORTB,7);
+		CLEAR_BIT(PORTB,1);
+		CLEAR_BIT(PORTB,0);
+	}
+
+	if(g_UartReceiveData == 151)
+	{
+		SET_BIT(PORTA,0);/////////////////debug
+		CLEAR_BIT(PORTA,1);/////////////////debug
+	}
+
+	if(g_UartReceiveData == 152)
+	{
+		SET_BIT(PORTA,1);/////////////////debug
+		CLEAR_BIT(PORTA,0);/////////////////debug
+	}
+
+	if(g_UartReceiveData == STOP_MACHINE)
+	{
+		SET_BIT(PORTA,1);/////////////////debug
+		CLEAR_BIT(PORTA,0);/////////////////debug
+
+	}
+
+
+*/
+}
+
+
+
+int main(void)
+{
+	SREG |= (1<<7);/* Enable Global Interrupts */
+
+	/* Initialize the UART driver with Baud-rate = 9600 bits/sec */
+	UART_init(9600);
+	UartReceive_setCallBack(UartReceiveMessage);
+
+	/*	SET_BIT(DDRB,0);/////////////////debug
+	SET_BIT(DDRB,1);/////////////////debug
+	SET_BIT(DDRB,7);/////////////////debug
+	SET_BIT(DDRA,0);/////////////////debug
+	SET_BIT(DDRA,1);/////////////////debug
+	 */
+
+	ADC_ConfigType adcConfig = {ADC_REF_VOLT_CODE, F_CPU_8}; //initialize structure of adc to choose required prescaler and reference
+	ADC_init(&adcConfig);
+	DcMotor_Init();
+
+	Volt_Percent_t Volt;
+	while(1)
+	{
+		Volt = Voltage_Percent();
+
+		switch(Volt)
+		{
+		case Volt_10_Percent:
+			DcMotor_Rotate(CW,10);
+			break;
+
+		case Volt_20_Percent:
+			DcMotor_Rotate(CW,20);
+			break;
+
+		case Volt_30_Percent:
+			DcMotor_Rotate(CW,30);
+			break;
+
+		case Volt_40_Percent:
+			DcMotor_Rotate(CW,40);
+			break;
+
+		case Volt_50_Percent:
+			DcMotor_Rotate(CW,50);
+			break;
+
+		case Volt_60_Percent:
+			DcMotor_Rotate(CW,60);
+			break;
+
+		case Volt_70_Percent:
+			DcMotor_Rotate(CW,70);
+			break;
+
+		case Volt_80_Percent:
+			DcMotor_Rotate(CW,80);
+			break;
+
+		case Volt_90_Percent:
+			DcMotor_Rotate(CW,90);
+			break;
+
+		default:
+			DcMotor_Rotate(CW,100);
+			break;
+		}
+	}
+}

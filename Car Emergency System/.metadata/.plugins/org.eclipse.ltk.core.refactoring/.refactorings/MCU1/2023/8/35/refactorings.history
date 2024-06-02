@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;car/Watch_dog.h&apos; to &apos;WatchDog.h&apos;" description="Rename resource &apos;Watch_dog.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Watch_dog.h" name="WatchDog.h" stamp="1693453061395" updateReferences="true"/>
+</session>

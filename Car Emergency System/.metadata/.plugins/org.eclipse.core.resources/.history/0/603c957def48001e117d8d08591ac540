@@ -1,0 +1,53 @@
+/******************************************************************************
+ *
+ * Module: main
+ *
+ * File Name: main.c
+ *
+ * Description: main file
+ *
+ * Author: Ali Mamdouh
+ *
+ *******************************************************************************/
+#include "uart.h"
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
+#include "common_macros.h"
+#include "std_types.h"
+#include "adc.h"
+#include "motor.h"
+#include "Potentiometer.h"
+#include "Servo.h"
+#include "Buzzer.h"
+#include "gpio.h"
+#include "Application.h"
+
+int main(void)
+{
+
+	/* initialization of project*/
+	init();
+
+	while(1)
+	{
+		/*Selecting state of project*/
+		switch (State)
+		{
+		case NORMAL_STATE:
+			Normal_State();
+			break;
+
+		case EMERGENCY_STATE:
+			Emergency_State();
+			break;
+
+		case ABNORMAL_STATE:
+			Abnormal_State();
+			break;
+		}
+
+	}
+}
+
+

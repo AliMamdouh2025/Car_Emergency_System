@@ -1,0 +1,15 @@
+/*
+ * Potentiometer.c
+ *
+ *  Created on: Aug 30, 2023
+ *      Author: lap
+ */
+
+#include "Potentiometer.h"
+#include <avr/io.h> /* To use SREG register */
+#include <avr/interrupt.h>
+#include <util/delay.h> ///delay
+#include <avr/eeprom.h>
+#include "common_macros.h"
+#include "std_types.h" ///delay
+
