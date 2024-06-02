@@ -4,16 +4,10 @@
 ### MCU1: 
 - Components: Push Button - Temperature sensor - DC motor(as a fan).
 - Description: 
-1. MCU1 reads the state from E2PROM before 
-reading temperature to act according to it as an 
-abnormal state or not.
-2. MCU1 reads temperature and store state as 
-normal initially in E2PROM then moves the fan (DC
-motor) with acceptable speed according to states
+1. MCU1 reads the state from E2PROM before reading temperature to act according to it as an abnormal state or not.
+2. MCU1 reads temperature and store state as normal initially in E2PROM then moves the fan (DC motor) with acceptable speed according to states
 and send temperature to MCU2 using UART.
-3. If the user presses the push button and the 
-temperature is between 40◦C and 50◦C, MCU1 sends 
-to MCU2 code as shutting down the machine using 
+3. If the user presses the push button and the temperature is between 40◦C and 50◦C, MCU1 sends to MCU2 code as shutting down the machine using 
 UART.
 ### MCU2: 
 - Components: Servo motor - 3 Leds - potentiometer - Dc motor (as 
