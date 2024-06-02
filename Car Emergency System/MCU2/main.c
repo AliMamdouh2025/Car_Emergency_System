@@ -9,18 +9,6 @@
  * Author: Ali Mamdouh
  *
  *******************************************************************************/
-#include "uart.h"
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
-#include "common_macros.h"
-#include "std_types.h"
-#include "adc.h"
-#include "motor.h"
-#include "Potentiometer.h"
-#include "Servo.h"
-#include "Buzzer.h"
-#include "gpio.h"
 #include "Application.h"
 
 
