@@ -13,8 +13,6 @@
 
 
 
-
-
 int main(void)
 {
 	/* initialization of project*/
