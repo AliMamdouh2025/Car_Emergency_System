@@ -9,22 +9,6 @@
  * Author: Ali Mamdouh
  *
  *******************************************************************************/
-
-#include "uart.h"
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
-#include "common_macros.h"
-#include "Internal_EEPROM_interface.h"
-#include "std_types.h"
-#include <avr/eeprom.h>
-#include "adc.h"
-#include "lm35_sensor.h"
-#include "motor.h"
-#include "pwm.h"
-#include "button.h"
-#include "WatchDog.h"
-#include "timer1.h"
 #include "Application.h"
 
 
