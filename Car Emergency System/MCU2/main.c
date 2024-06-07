@@ -16,12 +16,12 @@
 int main(void)
 {
 
-	/* initialization of project*/
+	/* initialization of system*/
 	init();
 
 	while(1)
 	{
-		/*Selecting state of project*/
+		/*Selecting state of system*/
 		switch (State)
 		{
 		case NORMAL_STATE:
